@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<config>
+      <modules>
+        <Yli_RedisTest>
+          <version>0.1.0</version>
+        </Yli_RedisTest>
+      </modules>
+      <global>
+          <helpers>
+            <redistest>
+              <class>Yli_RedisTest_Helper</class>
+            </redistest>
+          </helpers>
+          <models>
+             <redistest>
+                <class>Yli_RedisTest_Model</class>
+             </redistest>
+             <catalogsearch_resource>
+	       			<rewrite>
+	       					<query>Yli_RedisTest_Model_CatalogSearch_Resource_Query</query>
+	             	</rewrite>
+	          </catalogsearch_resource>  
+          </models>
+      </global>
+      <frontend>
+		<routers>
+			<catalogsearch>
+				<args>
+					<modules>
+						<redistest before="Mage_CatalogSearch">Yli_RedisTest_CatalogSearch</redistest>
+					</modules>
+				</args>
+			</catalogsearch>
+		</routers>
+	</frontend>
+	<default>
+	    <redis>
+	    	<catalogsearch>
+		    		<database>3</database>
+	    	</catalogsearch>
+	    </redis>
+	</default>
+	<crontab>
+        <jobs>
+            <combine_search_data_to_db>
+                <schedule>
+                    <cron_expr>0 2 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>redistest/catalogSearch_observer::combineData</model>
+                </run>
+            </combine_search_data_to_db>
+        </jobs>
+    </crontab>
+</config>
