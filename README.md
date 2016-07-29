@@ -1,0 +1,2 @@
+# Yli_RedisTest
+使用Redis优化Magento的小玩意集合
